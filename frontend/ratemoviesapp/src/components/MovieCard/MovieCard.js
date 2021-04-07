@@ -1,13 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import MovieModel from '../../models/movies'
 
 function MovieCard () {
+    /* refactor */
+    const [ movies, setMovies] = useState([])
+
     const [ movieTitle, setMovieTitle] = useState("")
     const [ movieDatePublished, setMovieDatePublished ] = useState("")
     const [ movieDescription, setMovieDescription ] = useState("")
     const [ movieAvgRating, setMovieAvgRating] = useState("")
 
-    
+    useEffect(() => {
+        fetchData();
+    }, []) 
+
+    const fetchData = () => {
+        /* get all movies */
+        MovieModel.allMovies().then(json => {
+            console.log(json, "fetched Movies From API")
+            setMovies(json)
+          })
+    }
+
+
     return(
         <>
             <Card>
