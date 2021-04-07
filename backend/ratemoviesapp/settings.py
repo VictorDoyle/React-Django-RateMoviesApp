@@ -27,12 +27,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# REST
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': {
+        'rest_framework.permissions.isAuthenticated',
+    }
+}
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -5,21 +5,30 @@ from rest_framework.decorators import action
 # import mods
 from .models import Movie, Rating
 from django.contrib.auth.models import User
-from .serializers import MovieSerializer, RatingSerializer
+from .serializers import MovieSerializer, RatingSerializer, UserSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = (TokenAuthentication,)
 
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     @action(detail=True, methods=['POST'])
     def rate_movie(self, request, pk=None): 
         if 'stars' in request.data:
             movie = Movie.objects.get(id=pk)
             stars = request.data['stars']
-            # user = request.user
-            # hardcoded -> user = User.objects.get(id=1)
-            
+            user = request.user
+            print(user)
+          
             try:
                 rating = Rating.objects.get(user = user.id, movie = movie.id)
                 rating.stars = stars
@@ -35,7 +44,18 @@ class MovieViewSet(viewsets.ModelViewSet):
         else: 
             response = {'message': 'You Need To Provide A Star Rating'}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
-
+    
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    # Prevent Built In Methods for C. & U.
+    def create(self, request, *args, **kwargs):
+        response = {'message': 'Creating The Rating Was Not Done Via Proper Channels. Bad Request'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    def update(self, request, *args, **kwargs):
+        response = {'message': 'Updating The Rating Was Not Done Via Proper Channels. Bad Request'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
