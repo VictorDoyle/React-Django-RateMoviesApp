@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import MovieModel from '../../models/movies'
-
+/* styling */
+import '../../styles/MovieCard.css'
 function MovieCard () {
     /* refactor */
     const [ movies, setMovies] = useState([])
 
-    const [ movieTitle, setMovieTitle] = useState("")
-    const [ movieDatePublished, setMovieDatePublished ] = useState("")
-    const [ movieDescription, setMovieDescription ] = useState("")
-    const [ movieAvgRating, setMovieAvgRating] = useState("")
 
     useEffect(() => {
         fetchData();
@@ -18,12 +15,11 @@ function MovieCard () {
     const fetchData = () => {
         /* get all movies */
         MovieModel.allMovies().then(json => {
-            console.log(json, "fetched Movies From API")
             setMovies(json)
           })
     }
 
-    console.log(movies, "MOVIES")
+    console.log(movies, "MOVIES FETCHED BY API")
 
 
     /* map out movies dynamically */
@@ -31,7 +27,7 @@ function MovieCard () {
     let movieList = movies.map((movie) => {
         return <>
           <>
-        <Card>
+        <Card className="movieCardStyling">
             <Image src='/images/avatar/large/daniel.jpg' wrapped ui={false} />
             <Card.Content>
             <Card.Header>{movie.title}</Card.Header>
@@ -39,6 +35,11 @@ function MovieCard () {
             <Card.Description>
                 {movie.description}
             </Card.Description>
+            <Card.Meta className="viewMovieDetail">
+                <a>
+                View Movie
+                </a>
+            </Card.Meta>
             </Card.Content>
             <Card.Content extra>
             <a>
@@ -60,7 +61,7 @@ function MovieCard () {
     return(
         <>
 
-        {movies ? movieList :  <> <h1> There Are No Movies </h1> </>}
+        {movies !== [] ? movieList :  <> <h1> There Are No Movies </h1> </>}
          
         </>
     )

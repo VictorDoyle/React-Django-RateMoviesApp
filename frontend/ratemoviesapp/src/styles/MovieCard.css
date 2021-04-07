@@ -1,0 +1,9 @@
+.movieCardStyling {
+    margin: 25px !important;
+    height: 450px !important;
+}
+
+.viewMovieDetail {
+    position: absolute;
+    bottom: 15%;
+}
