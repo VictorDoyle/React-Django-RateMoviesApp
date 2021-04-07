@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Movie(models.Model):
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=300)
+    year_published = models.DateField(blank=True, null=True)
 
     def num_of_ratings(self):
         ratings = Rating.objects.filter(movie=self)

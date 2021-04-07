@@ -23,25 +23,45 @@ function MovieCard () {
           })
     }
 
+    console.log(movies, "MOVIES")
+
+
+    /* map out movies dynamically */
+
+    let movieList = movies.map((movie) => {
+        return <>
+          <>
+        <Card>
+            <Image src='/images/avatar/large/daniel.jpg' wrapped ui={false} />
+            <Card.Content>
+            <Card.Header>{movie.title}</Card.Header>
+            <Card.Meta>{movie.date_published}</Card.Meta>
+            <Card.Description>
+                {movie.description}
+            </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+            <a>
+                <Icon name='star' />
+                Average Rating {movie.avg_ratings}
+            </a>
+            <br/>
+            <a>
+                <Icon name='star' />
+                Number Of Ratings: {movie.num_of_ratings}
+            </a>
+            </Card.Content>
+        </Card>
+       </>
+        </>
+    })
+
 
     return(
         <>
-            <Card>
-                <Image src='/images/avatar/large/daniel.jpg' wrapped ui={false} />
-                <Card.Content>
-                <Card.Header>MOVIE TITLE</Card.Header>
-                <Card.Meta>DATE OF PUBLISH</Card.Meta>
-                <Card.Description>
-                    Movie Description
-                </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                <a>
-                    <Icon name='star' />
-                    Average Rating
-                </a>
-                </Card.Content>
-            </Card>
+
+        {movies ? movieList :  <> <h1> There Are No Movies </h1> </>}
+         
         </>
     )
 }
