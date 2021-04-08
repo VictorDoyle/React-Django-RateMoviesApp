@@ -1,0 +1,15 @@
+.landingCardContainer {
+    display: inline-block;
+}
+
+
+.landingPageCard {
+    margin: 25px !important;
+    height: 250px !important;
+    width: 300px !important;
+}
+
+.homepageCardContainer {
+    display: flex;
+    justify-content: center;
+}

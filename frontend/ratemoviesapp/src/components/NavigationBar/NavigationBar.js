@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Input, Menu } from 'semantic-ui-react'
+import SearchBar from '../SearchBar/SearchBar'
 
 function NavigationBar() {
     const [activeItem, setActiveItem ] = useState("home")
@@ -34,10 +35,10 @@ function NavigationBar() {
                 onClick={handleItemClick}
                 />
                 </Link>
-                
+
                 <Menu.Menu position='right'>
                 <Menu.Item>
-                    <Input icon='search' placeholder='Search For A Movie...' />
+                    <SearchBar />
                 </Menu.Item>
                 <Menu.Item
                     name='logout'
